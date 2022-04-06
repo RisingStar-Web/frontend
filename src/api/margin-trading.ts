@@ -4,7 +4,7 @@ import { IInputPosition, IPosition } from '../types'
 import { ContractFactory } from './contract-factory'
 import { Ether } from './ether'
 import { Utils } from './utils'
-import tokenList from './../assets/tokenlist.json'
+import tokenList from '@ithil-protocol/deployed/latest/tokenlist.json'
 
 export class MarginTrading {
   private signer!: ethers.providers.JsonRpcSigner

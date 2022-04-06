@@ -11,7 +11,7 @@ import {
 import { BigNumber, ethers } from 'ethers'
 
 import { format } from 'date-fns'
-import tokenList from './assets/tokenlist.json'
+import tokenList from '@ithil-protocol/deployed/latest/tokenlist.json'
 
 export const mapErrorToCode = (e: any): number => {
   return e?.response?.status ?? 500
