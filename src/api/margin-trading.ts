@@ -96,10 +96,6 @@ export class MarginTrading {
     )
 
     const [maxSpent, minObtained] = await this.computeMaxAndMin(positionData)
-    console.log(
-      BigNumber.from(Math.floor(Date.now() / 1000) + 60 * deadline)._hex,
-    )
-    console.log('big')
     try {
       const position = await this.contract.openPosition(
         {
