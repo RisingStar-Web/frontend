@@ -22,13 +22,9 @@ interface IInputFieldMaxProps {
 export const InputFieldMax = (props: IInputFieldMaxProps) => {
   const [value, setValue] = useState(props.value)
   const [inputIsFocused, setInputIsFocused] = useState(false)
-  const [maxAvailable, setMaxAvailable] = useState(Number)
 
   const getMax = async (tokenAddress: string) => {
     const getMax = etherGlobal.getMaxDepositAmount(tokenAddress)
-    console.log(tokenAddress)
-
-    setMaxAvailable(await getMax)
     setValue((await getMax).toString())
   }
 

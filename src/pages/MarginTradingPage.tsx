@@ -113,7 +113,7 @@ export const MarginTradingPage = () => {
 
       setisLoading(true)
 
-      await new Promise((resolve) => setTimeout(resolve, 10000)) // 15 sec
+      await new Promise((resolve) => setTimeout(resolve, 10000)) // 10 sec
 
       const txReceipt = await etherGlobal.getSerializableTransactionReceipt(
         position.hash,
@@ -123,6 +123,7 @@ export const MarginTradingPage = () => {
         setStatus('Transcaction Verified')
       } else {
         setStatus('Transcaction Failed')
+        setisLoading(false)
       }
 
       if (txReceipt && txReceipt.blockNumber) {
@@ -137,13 +138,6 @@ export const MarginTradingPage = () => {
       setisLoading(false)
     },
   })
-
-  // const isLoading =
-  //   positionApproval === Approval.PENDING
-  //     ? true
-  //     : !openPositionTx
-  //     ? false
-  //     : openPositionTx.status !== 'verified'
 
   return (
     <ContentContainer>
