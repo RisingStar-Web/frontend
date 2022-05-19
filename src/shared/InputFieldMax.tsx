@@ -3,22 +3,27 @@ import 'twin.macro'
 import tw from 'twin.macro'
 
 import { useEffect, useState } from 'react'
+import { etherGlobal } from '../api/ether'
 
 import { Txt } from './Txt'
 
 interface IInputFieldMaxProps {
   label?: string
   onChange: (value: string) => void
+  renderRight?: React.ReactNode
   value: string
   unit: string
+  address: string
   placeholder?: string
   className?: string | undefined
-  onMaxClick: () => void
+  onMaxClick?: () => void
 }
 
 export const InputFieldMax = (props: IInputFieldMaxProps) => {
   const [value, setValue] = useState(props.value)
   const [inputIsFocused, setInputIsFocused] = useState(false)
+
+  const getMax = etherGlobal.getMaxDepositAmount(props.address)
 
   useEffect(() => {
     setValue(props.value)

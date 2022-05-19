@@ -86,19 +86,6 @@ export class MarginTrading {
     }
   }
 
-  // getEthereumContract = (baseProvider: any) => {
-  //   const provider = useProviderInfo()
-
-  //   const signer = provider?.getSigner()
-  //   const transactionContract = new ethers.Contract(
-  //     addresses.MarginTradingStrategy,
-  //     MarginStrategy,
-  //     signer,
-  //   )
-
-  //   return transactionContract
-  // }
-
   async openPosition(positionData: IInputPosition): Promise<any> {
     const { spentToken, obtainedToken, deadline, margin, positionType } =
       positionData
@@ -109,7 +96,10 @@ export class MarginTrading {
     )
 
     const [maxSpent, minObtained] = await this.computeMaxAndMin(positionData)
-
+    console.log(
+      BigNumber.from(Math.floor(Date.now() / 1000) + 60 * deadline)._hex,
+    )
+    console.log('big')
     try {
       const position = await this.contract.openPosition(
         {
@@ -117,8 +107,8 @@ export class MarginTrading {
           obtainedToken,
           deadline: BigNumber.from(
             Math.floor(Date.now() / 1000) + 60 * deadline,
-          ).toHexString(),
-          collateral: marginValue.toHexString(),
+          )._hex,
+          collateral: marginValue._hex,
           collateralIsSpentToken: positionType === 'long' ? true : false,
           minObtained: minObtained.toHexString(),
           maxSpent: maxSpent.toHexString(),

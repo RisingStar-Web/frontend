@@ -18,7 +18,7 @@ import { TabsSwitch } from '../shared/TabsSwitch'
 import { TokenInputField } from './TokenInputField'
 import { Txt } from '../shared/Txt'
 import { addresses } from '@ithil-protocol/deployed/latest/addresses.json'
-import { etherGlobal } from '../api/ether'
+import { Ether, etherGlobal } from '../api/ether'
 import { getCTALabelForApproval } from '../utils'
 import { showErrorNotification } from '../shared/notification'
 import { tokens } from '@ithil-protocol/deployed/latest/tokenlist.json'
@@ -27,6 +27,7 @@ import { useAsync } from 'react-use'
 import { useIsConnected } from '../shared/hooks/useIsConnected'
 import { useState } from 'react'
 import { useProviderInfo } from '../shared/hooks/useProviderInfo'
+import { InputFieldMax } from '../shared/InputFieldMax'
 
 export const MarginTradingPage = () => {
   const addTx = useAddTransaction()
@@ -109,6 +110,7 @@ export const MarginTradingPage = () => {
       const position = await etherGlobal.marginTrading.openPosition(
         positionData,
       )
+
       setisLoading(true)
 
       await new Promise((resolve) => setTimeout(resolve, 10000)) // 15 sec
@@ -194,11 +196,12 @@ export const MarginTradingPage = () => {
                     value={maxSpent.round(4).toString()}
                   />
                 </div>
-                <InputField
+                <InputFieldMax
                   label='Margin'
-                  tooltip
                   placeholder='0'
                   value={margin}
+                  unit={spentToken.symbol}
+                  address={spentToken.address}
                   onChange={(value) => setMargin(value)}
                   renderRight={
                     <Txt.InputText tw='text-font-100'>
