@@ -33,12 +33,15 @@ export const MarginTradingPage = () => {
   const [positionType, setPositionType] = useState<'short' | 'long'>('long')
   const [spentToken, setSpentToken] = useState<TokenDetails>(tokens[0])
   const [obtainedToken, setObtainedToken] = useState<TokenDetails>(tokens[1])
-  const [leverage, setLeverage] = useState<number>(1)
+  const [leverage, setLeverage] = useState<number>(0)
   const [margin, setMargin] = useState<string>('2')
   const [slippage, setSlippage] = useState<any>(1)
   const [deadline, setDeadline] = useState<any>(20)
   const [showAdvancedOptions, setShowAdvancedOptions] = useState<any>(false)
   const [priority, setPriority] = useState<Priority>('buy')
+  const [buttonText, setButtonText] = useState<any>('')
+  const [isLoading, setisLoading] = useState<any>(false)
+
   const [minObtained, setMinObtained] = useState<FixedNumber>(
     FixedNumber.from('0'),
   )
@@ -47,6 +50,23 @@ export const MarginTradingPage = () => {
   )
   const [maxSpent, setMaxSpent] = useState<FixedNumber>(FixedNumber.from('0'))
 
+  const CreatePosition = async (tokenAddress: string) => {
+    setisLoading(
+      positionApproval === Approval.PENDING
+        ? true
+        : !openPositionTx
+        ? false
+        : openPositionTx.status !== 'verified',
+    )
+
+    const getMax = await etherGlobal.getMaxDepositAmount(tokenAddress)
+    if (parseInt(margin) > getMax) {
+      setButtonText('INSUFFICIENT FUNDS')
+    } else {
+      setisLoading(true)
+      openPosition()
+    }
+  }
   const isConnected = useIsConnected()
   useAsync(async () => {
     try {
@@ -102,6 +122,12 @@ export const MarginTradingPage = () => {
         priority,
         deadline,
       }
+
+      const getMax = await etherGlobal.getMaxDepositAmount(spentToken.address)
+      if (parseInt(margin) > getMax) {
+        setButtonText('Insufficient Funds')
+      }
+
       const position = await etherGlobal.marginTrading.openPosition(
         positionData,
       )
@@ -109,12 +135,7 @@ export const MarginTradingPage = () => {
       setOpenPositionHash(position.hash)
     },
   })
-  const isLoading =
-    positionApproval === Approval.PENDING
-      ? true
-      : !openPositionTx
-      ? false
-      : openPositionTx.status !== 'verified'
+
   return (
     <ContentContainer>
       <div tw='flex flex-col w-full items-center'>
@@ -171,8 +192,12 @@ export const MarginTradingPage = () => {
                   placeholder='0'
                   unit={spentToken.symbol}
                   address={spentToken.address}
-                  value={margin}
-                  onChange={(value) => setMargin(value)}
+                  value={margin.toString()}
+                  StateChanger={setMargin}
+                  onChange={(value) => {
+                    setMargin(value)
+                    setButtonText('')
+                  }}
                   renderRight={
                     <Txt.InputText tw='text-font-100'>
                       {spentToken.symbol}
@@ -274,15 +299,21 @@ export const MarginTradingPage = () => {
                   )}
                 </div>
                 <Button
-                  text={getCTALabelForApproval(
-                    `${priority.toUpperCase()} / ${positionType.toUpperCase()} TKN`,
-                    positionApproval,
-                  )}
+                  text={
+                    buttonText
+                      ? buttonText
+                      : getCTALabelForApproval(
+                          `${priority.toUpperCase()} / ${positionType.toUpperCase()} TKN`,
+                          positionApproval,
+                        )
+                  }
                   full
                   action
                   bold
                   isLoading={isLoading}
-                  onClick={() => openPosition()}
+                  onClick={() => {
+                    CreatePosition(spentToken.address)
+                  }}
                 />
                 <Txt.CaptionMedium>
                   {!openPositionTx
