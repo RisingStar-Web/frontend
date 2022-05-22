@@ -20,14 +20,15 @@ export const NavigationMenu = (props: { onItemClick?(): void }) => {
   const { pathname } = useLocation()
   const path = pathname.endsWith('/') ? pathname : `${pathname}/`
 
-  const selectedRoute =
-    items.find((i) => new RegExp(`${i.url}/.*`).test(path)) ?? items[0]
+  const selectedRoute = items.find((i) => new RegExp(`${i.url}/.*`).test(path))
 
   return (
     <div tw='flex flex-row items-center min-width[256px] bg-primary'>
       <div tw='flex px-3 gap-3 desktop:gap-6'>
         {items.map((i) => {
-          const isSelected = i.url === selectedRoute?.url
+          const isSelected =
+            i.url === selectedRoute?.url ||
+            (new RegExp(`/position/`).test(pathname) && i.url === '/dashboard')
           return (
             <Link
               to={i.url}
