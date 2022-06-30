@@ -1,7 +1,6 @@
-import { BaseStrategy, StrategyIdentifier } from './base-strategy'
 import { BigNumber, FixedNumber, ethers } from 'ethers'
+import { BaseStrategy, StrategyIdentifier } from './base-strategy'
 import { IPosition, LeveragedInputPosition, Transaction } from '../types'
-
 import { ContractFactory } from './contract-factory'
 import { Ether } from './ether'
 import { Utils } from './utils'

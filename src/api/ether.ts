@@ -91,8 +91,7 @@ export class Ether {
       this.signer,
     )
     const balance = await tokenContract.balanceOf(this.getAccountAddress())
-
-    return parseFloat(ethers.utils.formatUnits(BigNumber.from(balance)))
+    return parseFloat(Ether.utils.formatUnits(balance))
   }
 
   async getTokenTvl(tokenAddress: string): Promise<FixedNumber> {
@@ -115,7 +114,6 @@ export class Ether {
     // @ts-ignore
     const balance = await vault.balance(tokenAddress)
     const tokenTotalSupply = await token.totalSupply()
-
     return Math.pow(
       parseInt(balance) / parseInt(tokenTotalSupply),
       (365 / daysFromStart - 1) * 100,

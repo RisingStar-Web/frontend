@@ -71,7 +71,7 @@ export const LeveragedPositionPage = () => {
                     }
                   />
                   <ClosePosition
-                    token={collateralToken.symbol as string}
+                    token={collateralToken.symbol}
                     value={3000}
                     onClick={closePosition}
                   />

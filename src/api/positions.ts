@@ -1,15 +1,16 @@
-import {
-  BaseStrategy,
-  StrategyIdentifier,
-  SupportedEventFilters,
-} from './base-strategy'
 import { BigNumber, FixedNumber, ethers } from 'ethers'
+import { tokens } from '@ithil-protocol/deployed/latest/tokenlist.json'
 
 import { Ether } from './ether'
 import { IPosition } from '../types'
 import { LeveragedTrading } from './leveraged-trading'
 import { MarginTrading } from './margin-trading'
-import { tokens } from '@ithil-protocol/deployed/latest/tokenlist.json'
+
+import {
+  BaseStrategy,
+  StrategyIdentifier,
+  SupportedEventFilters,
+} from './base-strategy'
 
 export class PositionAggregate {
   public strategies: BaseStrategy[] = []

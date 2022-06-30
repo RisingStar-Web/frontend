@@ -7,8 +7,6 @@ import { StrategyIdentifier } from '../../api/base-strategy'
 export const PositionPage = () => {
   const { strategy } = useParams<{ strategy: StrategyIdentifier }>()
 
-  console.log(strategy)
-
   if (strategy === 'margin') {
     return <MarginPositionPage />
   } else return <LeveragedPositionPage />

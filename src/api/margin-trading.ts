@@ -1,5 +1,5 @@
-import { BaseStrategy, StrategyIdentifier } from './base-strategy'
 import { BigNumber, FixedNumber, Transaction, ethers } from 'ethers'
+import { BaseStrategy, StrategyIdentifier } from './base-strategy'
 import { IPosition, MarginInputPosition } from '../types'
 
 import { ContractFactory } from './contract-factory'
@@ -89,10 +89,7 @@ export class MarginTrading extends BaseStrategy {
     const { spentToken, obtainedToken, deadline, margin, positionType } =
       positionData
 
-    const marginValue = Ether.utils.parseTokenUnits(
-      margin.toString(),
-      spentToken,
-    )
+    const marginValue = Ether.utils.parseTokenUnits(margin, spentToken)
     const [maxSpent, minObtained] = await this.computeMaxAndMin(positionData)
     try {
       const position = await this.contract.openPosition(
@@ -153,17 +150,11 @@ export class MarginTrading extends BaseStrategy {
         FixedNumber.from(position.toBorrow),
       )
     }
-
+    console.group({ amount })
     const quoteAmount = FixedNumber.from(
       Ether.utils.formatTokenUnits(amount[0], position.collateralToken.address),
     )
 
-    /*
-      if(long)
-        P&L = quote(position.heldToken, position.owedToken, position.allowance) - position.principal - position.collateral;
-      else 
-        P&L = position.allowance - quote(position.owedToken, position.heldToken, position.principal) 
-    */
     const profit =
       position.type === 'long'
         ? quoteAmount
