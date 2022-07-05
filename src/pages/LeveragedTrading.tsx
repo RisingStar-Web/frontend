@@ -43,12 +43,12 @@ export const LeveragedTradingPage = () => {
   const [leverage, setLeverage] = useState<number>(1)
   const [slippage, setSlippage] = useState<any>(1)
   const [deadline, setDeadline] = useState<any>(20)
-  const [maxSpent, setMaxSpent] = useState<FixedNumber>(FixedNumber.from('0'))
+  const [maxSpent, setMaxSpent] = useState<FixedNumber>(FixedNumber.from(0))
 
   const [showAdvancedOptions, setShowAdvancedOptions] = useState<any>(false)
 
   const [maxLeverage, setMaxLeverage] = useState<FixedNumber>(
-    FixedNumber.from('5'),
+    FixedNumber.from(5),
   )
 
   const isConnected = useIsConnected()

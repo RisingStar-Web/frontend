@@ -44,12 +44,12 @@ export const MarginTradingPage = () => {
   const [buttonText, setButtonText] = useState<any>('')
 
   const [minObtained, setMinObtained] = useState<FixedNumber>(
-    FixedNumber.from('0'),
+    FixedNumber.from(0),
   )
   const [maxLeverage, setMaxLeverage] = useState<FixedNumber>(
-    FixedNumber.from('5'),
+    FixedNumber.from(5),
   )
-  const [maxSpent, setMaxSpent] = useState<FixedNumber>(FixedNumber.from('0'))
+  const [maxSpent, setMaxSpent] = useState<FixedNumber>(FixedNumber.from(0))
 
   const isConnected = useIsConnected()
   useAsync(async () => {

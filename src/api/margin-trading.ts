@@ -20,7 +20,7 @@ export class MarginTrading extends BaseStrategy {
   }
 
   async getMaxLeverage(): Promise<FixedNumber> {
-    return FixedNumber.from('5')
+    return FixedNumber.from(5)
   }
 
   async computeMaxAndMin({
@@ -29,10 +29,10 @@ export class MarginTrading extends BaseStrategy {
     ...positionData
   }: MarginInputPosition): Promise<any> {
     const margin = FixedNumber.from(positionData.margin)
-    const leverage = FixedNumber.from(positionData.leverage.toString())
+    const leverage = FixedNumber.from(positionData.leverage)
     const slippage = FixedNumber.from(positionData.slippage)
-    const base = FixedNumber.from('1').subUnsafe(
-      slippage.divUnsafe(FixedNumber.from('100')),
+    const base = FixedNumber.from(1).subUnsafe(
+      slippage.divUnsafe(FixedNumber.from(100)),
     )
 
     const [minQ] = await this.contract.quote(
@@ -122,12 +122,8 @@ export class MarginTrading extends BaseStrategy {
     const positionFee = FixedNumber.from(
       Ether.utils.formatTokenUnits(fees, position.spentToken.address),
     )
-    const currentTime = FixedNumber.from(
-      (new Date().getTime() / 1000).toString(),
-    )
-    const time = currentTime.subUnsafe(
-      FixedNumber.from(position.createdAt.toString()),
-    )
+    const currentTime = FixedNumber.from(new Date().getTime() / 1000)
+    const time = currentTime.subUnsafe(FixedNumber.from(position.createdAt))
 
     const timeFees = FixedNumber.from(position.toBorrow)
       .mulUnsafe(FixedNumber.from(position.interestRate))
@@ -169,7 +165,7 @@ export class MarginTrading extends BaseStrategy {
       profit,
       profit.divUnsafe(
         FixedNumber.from(position.collateralReceived).mulUnsafe(
-          FixedNumber.from('100'),
+          FixedNumber.from(100),
         ),
       ),
     ]

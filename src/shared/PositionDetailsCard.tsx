@@ -37,11 +37,6 @@ export const PositionDetailsCard = ({ position }: IPositionDetailsCard) => {
           details={collateralToken.symbol}
           value={FixedNumber.from(position.openPrice).round(4).toString()}
         />
-        {/* <InfoItem
-          label='Current price'
-          details={collateralToken.symbol}
-          value={currentPrice}
-        /> */}
         <InfoItem
           label='Liq. price'
           details={collateralToken.symbol}
@@ -56,11 +51,6 @@ export const PositionDetailsCard = ({ position }: IPositionDetailsCard) => {
             .round(4)
             .toString()}
         />
-        {/* <InfoItem
-          label='Distance from liquidation'
-          details={'%'}
-          value={distanceFromLiquidation}
-        /> */}
         {profit && (
           <InfoItem
             label='Profit'

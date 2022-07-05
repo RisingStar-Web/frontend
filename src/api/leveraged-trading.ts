@@ -74,12 +74,8 @@ export class LeveragedTrading extends BaseStrategy {
     const positionFee = FixedNumber.from(
       Ether.utils.formatTokenUnits(fees, position.spentToken.address),
     )
-    const currentTime = FixedNumber.from(
-      (new Date().getTime() / 1000).toString(),
-    )
-    const time = currentTime.subUnsafe(
-      FixedNumber.from(position.createdAt.toString()),
-    )
+    const currentTime = FixedNumber.from(new Date().getTime() / 1000)
+    const time = currentTime.subUnsafe(FixedNumber.from(position.createdAt))
 
     const timeFees = FixedNumber.from(position.toBorrow)
       .mulUnsafe(FixedNumber.from(position.interestRate))

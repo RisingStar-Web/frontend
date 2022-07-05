@@ -68,15 +68,15 @@ export class PositionAggregate {
       ),
     )
 
-    const leverage = FixedNumber.from('1').addUnsafe(
+    const leverage = FixedNumber.from(1).addUnsafe(
       toBorrow.divUnsafe(collateralReceived),
     )
 
     const type =
       collateralToken.address === spentToken.address ? 'long' : 'short'
 
-    const liquidationPriceBase = FixedNumber.from('1').divUnsafe(
-      leverage.mulUnsafe(FixedNumber.from('0.5')),
+    const liquidationPriceBase = FixedNumber.from(1).divUnsafe(
+      leverage.mulUnsafe(FixedNumber.from(0.5)),
     )
 
     const openPrice =
@@ -90,10 +90,10 @@ export class PositionAggregate {
     const liquidationPrice =
       type === 'long'
         ? openPrice.mulUnsafe(
-            FixedNumber.from('1').subUnsafe(liquidationPriceBase),
+            FixedNumber.from(1).subUnsafe(liquidationPriceBase),
           )
         : openPrice.mulUnsafe(
-            FixedNumber.from('1').addUnsafe(liquidationPriceBase),
+            FixedNumber.from(1).addUnsafe(liquidationPriceBase),
           )
 
     return {

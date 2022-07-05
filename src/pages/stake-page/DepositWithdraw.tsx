@@ -23,10 +23,10 @@ export const DepositWithdraw = (props: IDepositWithdrawProps) => {
   const [depositValue, setDepositValue] = useState<string>('0')
   const [withdrawValue, setWithdrawValue] = useState<string>('0')
   const [userTokenBalance, setUserTokenBalance] = useState<FixedNumber>(
-    FixedNumber.from('0'),
+    FixedNumber.from(0),
   )
   const [userTokenStakedBalance, setUserTokenStakedBalance] =
-    useState<FixedNumber>(FixedNumber.from('0'))
+    useState<FixedNumber>(FixedNumber.from(0))
   const [stakeHash, setStakeHash] = useState<string | undefined>(undefined)
   const [withdrawHash, setWithdrawHash] = useState<string | undefined>(
     undefined,

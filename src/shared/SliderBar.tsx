@@ -44,7 +44,6 @@ export const SliderBar = (props: ISliderProps) => {
           trackStyle={tw`bg-primary-400 height[3px]`}
           handleStyle={tw`bg-secondary border-0 shadow-none`}
           dotStyle={tw`bg-secondary border-0 height[3px] width[3px] marginBottom[3px]`}
-          // activeDotStyle={tw`bg-secondary border-0 height[7px] width[7px] marginBottom[1px]`}
           marks={marks}
         />
       </span>

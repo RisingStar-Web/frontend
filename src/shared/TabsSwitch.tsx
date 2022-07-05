@@ -70,8 +70,6 @@ export const TabsSwitch = (props: ITabsProps) => {
           />
         ))}
       </div>
-
-      {/* {props.items[activeIndex].content} */}
     </div>
   )
 }

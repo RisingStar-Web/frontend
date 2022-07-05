@@ -3,7 +3,7 @@ import { BigNumber, FixedNumber, ethers } from 'ethers'
 import { tokens } from '@ithil-protocol/deployed/latest/tokenlist.json'
 
 export class Utils {
-  static zero = FixedNumber.from('0')
+  static zero = FixedNumber.from(0)
   static parseTokenUnits(
     amount: string | number,
     tokenAddress?: string,

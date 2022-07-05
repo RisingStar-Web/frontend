@@ -24,7 +24,7 @@ const Number = (props: { value: number | FixedNumber }) => {
   const value = (
     props.value instanceof FixedNumber
       ? props.value
-      : FixedNumber.from(props.value.toString())
+      : FixedNumber.from(props.value)
   )
     .round(4)
     .toString()
