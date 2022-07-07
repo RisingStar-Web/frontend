@@ -224,3 +224,15 @@ export interface IPosition {
   liquidationPrice: string
   createdAt: number
 }
+
+// export interface IPosition {
+//   owedToken: string
+//   heldToken: string
+//   collateralToken: string
+//   collateral: number
+//   principal: number
+//   allowance: number
+//   interestRate: number
+//   fees: number
+//   createdA: number
+// }

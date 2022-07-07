@@ -76,7 +76,7 @@ export class PositionAggregate {
       collateralToken.address === spentToken.address ? 'long' : 'short'
 
     const liquidationPriceBase = FixedNumber.from(1).divUnsafe(
-      leverage.mulUnsafe(FixedNumber.from(0.5)),
+      leverage.mulUnsafe(FixedNumber.from('0.5')),
     )
 
     const openPrice =
