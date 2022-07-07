@@ -63,7 +63,7 @@ export class PositionAggregate {
     )
     const interestRate = FixedNumber.from(
       Ether.utils.formatTokenUnits(
-        args![9] as BigNumber,
+        args![8] as BigNumber,
         collateralToken.address,
       ),
     )
@@ -134,8 +134,6 @@ export class PositionAggregate {
         '0x1',
         'latest',
       )
-      console.log(identifier, this.getFilter(s, filter))
-      console.log(events)
       const strategyEvents = events.map((e) => ({
         event: e,
         identifier,
@@ -146,6 +144,7 @@ export class PositionAggregate {
   }
   async getUserPositions(user: string): Promise<IPosition[]> {
     const allPositions = await this.getEventPositions('open')
+    console.log({ allPositions })
     const closedPositions = await this.getEventPositions('closed')
     const liquidatedPositions = await this.getEventPositions('liquidated')
 

@@ -122,16 +122,16 @@ export class MarginTrading extends BaseStrategy {
     const positionFee = FixedNumber.from(
       Ether.utils.formatTokenUnits(fees, position.spentToken.address),
     )
-    const currentTime = FixedNumber.from(new Date().getTime() / 1000)
+    const currentTime = FixedNumber.from(
+      (new Date().getTime() / 1000).toString(),
+    )
     const time = currentTime.subUnsafe(FixedNumber.from(position.createdAt))
-
     const timeFees = FixedNumber.from(position.toBorrow)
       .mulUnsafe(FixedNumber.from(position.interestRate))
       .mulUnsafe(time)
       .divUnsafe(FixedNumber.from(864000000))
 
     const totalFees = timeFees.addUnsafe(positionFee)
-
     let amount
     if (position.type === 'long') {
       amount = await this.contract.quote(
@@ -146,7 +146,6 @@ export class MarginTrading extends BaseStrategy {
         FixedNumber.from(position.toBorrow),
       )
     }
-    console.group({ amount })
     const quoteAmount = FixedNumber.from(
       Ether.utils.formatTokenUnits(amount[0], position.collateralToken.address),
     )
@@ -160,7 +159,6 @@ export class MarginTrading extends BaseStrategy {
         : FixedNumber.from(position.amountIn)
             .subUnsafe(quoteAmount)
             .subUnsafe(totalFees)
-
     return [
       profit,
       profit.divUnsafe(
