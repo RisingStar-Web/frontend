@@ -21,19 +21,14 @@ import { showErrorNotification } from '../shared/notification'
 import { useApprovalAction } from '../shared/hooks/useApprovalAction'
 import { useIsConnected } from '../shared/hooks/useIsConnected'
 import { useAddTransaction, useTransaction } from '../state/hooks'
-import {
-  Approval,
-  TokenDetails,
-  TransactionType,
-  YearnOpenPositionMeta,
-} from '../types'
+import { Approval, TokenDetails, TransactionType, Order } from '../types'
 import { getCTALabelForApproval } from '../utils'
 import { etherGlobal } from '../api/ether'
 import { ReactComponent as YearnLogo } from '../assets/images/yearn.svg'
 import { ReactComponent as LidoLogo } from '../assets/images/lido.svg'
 
 export const LeveragedTradingPage = () => {
-  const addTx = useAddTransaction<YearnOpenPositionMeta>()
+  const addTx = useAddTransaction<Order>()
   const [positionProtocol, setPositionProtocol] = useState<'yearn' | 'lido'>(
     'yearn',
   )
@@ -74,7 +69,8 @@ export const LeveragedTradingPage = () => {
             leverage,
             slippage,
             deadline,
-            token: token.address,
+            spentToken: token.address,
+            obtainedToken: token.address,
           })
         setMaxSpent(max)
       }
@@ -101,7 +97,8 @@ export const LeveragedTradingPage = () => {
         margin: tokenInput,
         slippage,
         leverage,
-        token: token.address,
+        spentToken: token.address,
+        obtainedToken: token.address,
         deadline,
       }
       const position = await etherGlobal.position

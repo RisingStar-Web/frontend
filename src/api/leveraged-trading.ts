@@ -1,6 +1,6 @@
 import { BigNumber, FixedNumber, ethers } from 'ethers'
 import { BaseStrategy, StrategyIdentifier } from './base-strategy'
-import { IPosition, LeveragedInputPosition, Transaction } from '../types'
+import { IPosition, LeveragedOrder, Transaction } from '../types'
 import { ContractFactory } from './contract-factory'
 import { Ether } from './ether'
 import { Utils } from './utils'
@@ -20,7 +20,7 @@ export class LeveragedTrading extends BaseStrategy {
     return FixedNumber.from('5')
   }
 
-  async computeMaxSpent(positionData: LeveragedInputPosition): Promise<any> {
+  async computeMaxSpent(positionData: LeveragedOrder): Promise<any> {
     const margin = FixedNumber.from(positionData.margin)
     const leverage = FixedNumber.from(positionData.leverage.toString())
     const slippage = FixedNumber.from(positionData.slippage)
@@ -38,20 +38,20 @@ export class LeveragedTrading extends BaseStrategy {
     }
   }
 
-  async openPosition(positionData: LeveragedInputPosition): Promise<any> {
+  async openPosition(positionData: LeveragedOrder): Promise<any> {
     const { deadline, margin } = positionData
 
     const marginValue = Ether.utils.parseTokenUnits(
       margin.toString(),
-      positionData.token,
+      positionData.spentToken,
     )
     const maxSpent = await this.computeMaxSpent(positionData)
     try {
       const data = {
         deadline: BigNumber.from(Math.floor(Date.now() / 1000) + 60 * deadline),
         collateral: marginValue,
-        spentToken: positionData.token,
-        obtainedToken: positionData.token,
+        spentToken: positionData.spentToken,
+        obtainedToken: positionData.obtainedToken,
         collateralIsSpentToken: true,
         minObtained: maxSpent,
         maxSpent,

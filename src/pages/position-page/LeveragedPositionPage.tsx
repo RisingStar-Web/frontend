@@ -12,12 +12,12 @@ import { TopUp } from '../../shared/TopUp'
 import { Txt } from '../../shared/Txt'
 import { etherGlobal } from '../../api/ether'
 import { useAddTransaction, usePosition } from '../../state/hooks'
-import { MtsClosePositionMeta, TransactionType } from '../../types'
+import { ClosePositionMeta, TransactionType } from '../../types'
 
 export const LeveragedPositionPage = () => {
   const { positionId } = useParams<{ positionId: string }>()
   const position = usePosition(positionId!)
-  const addTx = useAddTransaction<MtsClosePositionMeta>()
+  const addTx = useAddTransaction<ClosePositionMeta>()
 
   const [liquidationInput, setLiquidationInput] = useState<string>('')
 

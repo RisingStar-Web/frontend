@@ -1,15 +1,14 @@
 import {
   Approval,
   ApprovalTransactionMeta,
-  MtsClosePositionMeta,
+  ClosePositionMeta,
   MtsEditPositionMeta,
   MtsOpenPositionMeta,
   StakeTransactionMeta,
   Transaction,
   TransactionType,
-  YearnClosePositionMeta,
   YearnEditPositionMeta,
-  YearnOpenPositionMeta,
+  Order,
 } from './types'
 import { BigNumber, ethers } from 'ethers'
 
@@ -67,7 +66,7 @@ export const getTransactionLabel = (t: Pick<Transaction, 'type' | 'meta'>) => {
     )?.symbol
     return `Opened ${meta.positionType} position ${obtainedTokenName}/${spentTokenName}`
   } else if (t.type === TransactionType.MTS_CLOSE_POSITION) {
-    const meta = t.meta as MtsClosePositionMeta
+    const meta = t.meta as ClosePositionMeta
     const obtainedTokenName = tokens.find(
       (t) => t.address === meta.obtainedToken,
     )?.symbol
@@ -85,13 +84,13 @@ export const getTransactionLabel = (t: Pick<Transaction, 'type' | 'meta'>) => {
     )?.symbol
     return `New collateral set on ${obtainedTokenName}/${spentTokenName} position`
   } else if (t.type === TransactionType.YEARN_OPEN_POSITION) {
-    const meta = t.meta as YearnOpenPositionMeta
-    const token = tokens.find((t) => t.address === meta.token)?.symbol
+    const meta = t.meta as Order
+    const token = tokens.find((t) => t.address === meta.obtainedToken)?.symbol
 
     return `Opened position ${token}`
   } else if (t.type === TransactionType.YEARN_CLOSE_POSITION) {
-    const meta = t.meta as YearnClosePositionMeta
-    const token = tokens.find((t) => t.address === meta.token)?.symbol
+    const meta = t.meta as ClosePositionMeta
+    const token = tokens.find((t) => t.address === meta.obtainedToken)?.symbol
     return `Closed ${token} position`
   } else if (t.type === TransactionType.YEARN_EDIT_POSTITION) {
     const meta = t.meta as YearnEditPositionMeta

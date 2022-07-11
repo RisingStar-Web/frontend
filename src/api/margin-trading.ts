@@ -1,6 +1,6 @@
 import { BigNumber, FixedNumber, Transaction, ethers } from 'ethers'
 import { BaseStrategy, StrategyIdentifier } from './base-strategy'
-import { IPosition, MarginInputPosition } from '../types'
+import { IPosition, MarginOrder } from '../types'
 
 import { ContractFactory } from './contract-factory'
 import { Ether } from './ether'
@@ -27,7 +27,7 @@ export class MarginTrading extends BaseStrategy {
     positionType,
     priority,
     ...positionData
-  }: MarginInputPosition): Promise<any> {
+  }: MarginOrder): Promise<any> {
     const margin = FixedNumber.from(positionData.margin)
     const leverage = FixedNumber.from(positionData.leverage)
     const slippage = FixedNumber.from(positionData.slippage)
@@ -85,7 +85,7 @@ export class MarginTrading extends BaseStrategy {
     }
   }
 
-  async openPosition(positionData: MarginInputPosition): Promise<any> {
+  async openPosition(positionData: MarginOrder): Promise<any> {
     const { spentToken, obtainedToken, deadline, margin, positionType } =
       positionData
 

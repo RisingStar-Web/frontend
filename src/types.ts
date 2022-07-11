@@ -84,11 +84,11 @@ export type TransactionMeta =
   | StakeTransactionMeta
   | ApprovalTransactionMeta
   | MtsOpenPositionMeta
-  | MtsClosePositionMeta
+  | ClosePositionMeta
   | MtsEditPositionMeta
-  | YearnClosePositionMeta
+  | ClosePositionMeta
   | YearnEditPositionMeta
-  | YearnOpenPositionMeta
+  | Order
 export interface Transaction {
   type: TransactionType
   chainId: number
@@ -150,7 +150,7 @@ export interface MtsOpenPositionMeta {
   deadline: number
 }
 
-export interface MtsClosePositionMeta {
+export interface ClosePositionMeta {
   positionId: string
   spentToken: string
   obtainedToken: string
@@ -161,19 +161,6 @@ export interface MtsEditPositionMeta {
   spentToken: string
   obtainedToken: string
   newCollateral: string
-}
-
-export interface YearnOpenPositionMeta {
-  margin: string
-  slippage: number
-  leverage: number
-  deadline: number
-  token: string
-}
-
-export interface YearnClosePositionMeta {
-  positionId: string
-  token: string
 }
 
 export interface YearnEditPositionMeta {
@@ -188,23 +175,20 @@ export type PositionType = 'long' | 'short'
 
 export type PositionStatus = 'open' | 'closed'
 
-export interface MarginInputPosition {
-  positionType: PositionType
+export interface Order {
   spentToken: string
   obtainedToken: string
   margin: string
   slippage: number
+  leverage: number
+  deadline: number
+}
+
+export interface MarginOrder extends Order {
+  positionType: PositionType
   priority: Priority
-  leverage: number
-  deadline: number
 }
-export interface LeveragedInputPosition {
-  margin: string
-  slippage: number
-  leverage: number
-  deadline: number
-  token: string
-}
+export type LeveragedOrder = Order
 
 export interface IPosition {
   positionId: string
